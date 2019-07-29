@@ -1,0 +1,56 @@
+" Plugins will be downloaded under the specified directory.
+call plug#begin('~/.vim/plugged')
+
+" Declare the list of plugins.
+Plug 'mhinz/vim-startify'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdcommenter'
+Plug 'itchyny/vim-cursorword'
+Plug 'lfv89/vim-interestingwords'
+Plug 'Yggdroot/indentLine'
+Plug 'w0ng/vim-hybrid'
+
+" List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
+set background=dark
+colorscheme hybrid
+
+set pastetoggle=<F2>
+
+let mapleader = ","
+
+nnoremap <Leader>t :TagbarToggle<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
+
+" leader+w to save
+inoremap <leader>w <Esc>:w<CR>
+noremap <leader>w :w<CR>
+
+" switch buffer
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> [n :bnext<CR>
+
+" split with control+h/j/k/l
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+set number relativenumber
+nmap <C-n><C-n> :set invnumber invrelativenumber<CR>
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
+highlight LineNr ctermfg=DarkGrey
+
+" auto load .vimrc when it's saved
+autocmd bufwritepost .vimrc source $MYVIMRC
+
+" write with sudo
+cnoremap w!! w !sudo tee % > /dev/null
